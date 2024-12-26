@@ -1,0 +1,154 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Social Feed</title>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #post-feed {
+            list-style-type: none;
+            padding: 0;
+        }
+        .post {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .post-title {
+            font-weight: bold;
+        }
+        .post-content {
+            margin: 10px 0;
+        }
+        .like-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    hi
+   <!-- <h1>Real-Time Social Feed</h1>
+    <ul id="post-feed"></ul>
+
+    To simulate adding a post from this page
+    <h2>Add a Post</h2>
+    <input type="text" id="post-title" placeholder="Post Title" />
+    <textarea id="post-content" placeholder="Post Content"></textarea>
+    <button id="create-post-button">Create Post</button>
+
+    <script>
+        const socket = io('http://localhost:5000'); // Connect to your backend
+
+        // Get the post feed container
+        const postFeed = document.getElementById('post-feed');
+
+        // Retrieve the token from localStorage
+        const token = localStorage.getItem('jwtToken'); // Assuming token is stored here after login
+
+
+        // Function to fetch posts from the server and display them
+        function fetchPosts() {
+            fetch('http://localhost:5000/api/posts', {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Sending the JWT token in the Authorization header
+                }
+            })
+            .then(response => response.json())
+            .then(posts => {
+                // Clear the post feed before adding the updated posts
+                postFeed.innerHTML = '';
+
+                posts.forEach(post => {
+                    const postElement = document.createElement('li');
+                    postElement.classList.add('post');
+                    postElement.innerHTML = `
+                        <div class="post-title">${post.title}</div>
+                        <div class="post-content">${post.content}</div>
+                        <div>
+                            Likes: <span id="likes-${post._id}">${post.likes}</span>
+                            <button class="like-button" onclick="likePost('${post._id}')">Like</button>
+                        </div>
+                    `;
+                    postFeed.appendChild(postElement);
+                });
+            })
+            .catch(error => console.log('Error fetching posts:', error));
+        }
+
+        // Fetch posts on page load
+        fetchPosts();
+
+        // Handle new posts from the server
+        socket.on('newPost', (post) => {
+            const postElement = document.createElement('li');
+            postElement.classList.add('post');
+            postElement.innerHTML = `
+                <div class="post-title">${post.title}</div>
+                <div class="post-content">${post.content}</div>
+                <div>
+                    Likes: <span id="likes-${post._id}">${post.likes}</span>
+                    <button class="like-button" onclick="likePost('${post._id}')">Like</button>
+                </div>
+            `;
+            postFeed.appendChild(postElement);
+        });
+
+        // Handle like updates
+        socket.on('likePost', (updatedPost) => {
+            const likesElement = document.getElementById(`likes-${updatedPost._id}`);
+            likesElement.textContent = updatedPost.likes;
+        });
+
+        // Function to create a new post
+        document.getElementById('create-post-button').addEventListener('click', () => {
+            const title = document.getElementById('post-title').value;
+            const content = document.getElementById('post-content').value;
+
+            if (title && content) {
+                // Create a post (for simplicity, this will be sent directly to the server)
+                fetch('http://localhost:5000/api/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Sending the JWT token in the Authorization header
+                    },
+                    body: JSON.stringify({ title, content })
+                })
+                .then(response => response.json())
+                .then(post => {
+                    // Emit the new post event manually (optional, depending on how your backend is set up)
+                    socket.emit('newPost', post);
+                    console.log('Post created', post);
+                })
+                .catch(error => console.log('Error creating post:', error));
+            }
+        });
+
+        // Function to like a post
+        function likePost(postId) {
+            fetch(`http://localhost:5000/api/posts/${postId}/like`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}` // Sending the JWT token in the Authorization header
+                }
+            })
+            .then(response => response.json())
+            .then(updatedPost => {
+                // Emit the like event manually (optional, depending on your backend setup)
+                socket.emit('likePost', updatedPost);
+                console.log('Post liked', updatedPost);
+            })
+            .catch(error => console.log('Error liking post:', error));
+            }-->
+    </script>
+</body>
+</html> 
